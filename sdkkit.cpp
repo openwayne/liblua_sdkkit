@@ -57,6 +57,14 @@ void sdkkit_onServerRoleInfo(std::string roleId, int roleLevel,
 
 //////////////////////////////////////////////
 
+static fflua_t* m_fflua_ptr;
+
+void initLuaFrame(lua_State* ls)
+{
+    m_fflua_ptr = new fflua(ls);
+}
+
+//////////////////////////////////////////////
 void sdkkit_login()
 {
     LOGD("sdkkit  login");
