@@ -3,6 +3,9 @@
 
 #include <iostream>
 
+
+extern char g_str[]; // 声明全局变量g_str
+
 //////////////////////////////////////////////
 void sdkkit_login();
 void sdkkit_kitCenter();

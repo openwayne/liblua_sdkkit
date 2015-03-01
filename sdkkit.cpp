@@ -62,7 +62,50 @@ static fflua_t* m_fflua_ptr;
 void initLuaFrame(lua_State* ls)
 {
     m_fflua_ptr = new fflua(ls);
+
+    // 绑定c++函数到lua
+    fflua_register_t<>(ls).def(&sdkkit_login, "sdkkit_login");
+    fflua_register_t<>(ls).def(&sdkkit_kitCenter, "sdkkit_login");
+    fflua_register_t<>(ls).def(&sdkkit_switchAccount, "sdkkit_login");
+    fflua_register_t<>(ls).def(&sdkkit_pay, "sdkkit_login");
+    fflua_register_t<>(ls).def(&sdkkit_userCenter, "sdkkit_login");
+    fflua_register_t<>(ls).def(&sdkkit_getOrderInfo, "sdkkit_login");
+    fflua_register_t<>(ls).def(&sdkkit_floatWindow, "sdkkit_login");
+    fflua_register_t<>(ls).def(&sdkkit_exitGame, "sdkkit_login");
 }
+
+
+void SDKKitPlateformCallBackImplWrapper_initCallBack(int retStatus, std::string retMessage)
+{
+}
+
+
+void SDKKitPlateformCallBackImplWrapper_loginCallBack(int retStatus, std::string s_retMessage, std::string s_loginUserId, std::string s_loginAuthToken, std::string cpId)
+{
+    m_fflua_ptr->call<void>("SDKKitPlateformCallBackImplWrapper_loginCallBack", retStatus, s_retMessage, s_loginUserId, s_loginAuthToken, cpId);
+}
+
+void SDKKitPlateformCallBackImplWrapper_logoutCallBack(int retStatus, std::string s_retMessage)
+{
+    m_fflua_ptr->call<void>("SDKKitPlateformCallBackImplWrapper_logoutCallBack", retStatus, s_retMessage);
+}
+
+void SDKKitPlateformCallBackImplWrapper_payCallBack(int retStatus, std::string s_retMessage,
+        std::string s_loginUserId, std::string s_loginAuthToken, std::string s_loginServerId, std::string s_payKitOrderId)
+{
+    m_fflua_ptr->call<void>("SDKKitPlateformCallBackImplWrapper_payCallBack", retStatus, s_retMessage, s_loginUserId, s_loginAuthToken, s_loginServerId, s_payKitOrderId);
+}
+
+void SDKKitPlateformCallBackImplWrapper_getOrderResultCallBack(int retStatus, std::string s_retMessage)
+{
+    m_fflua_ptr->call<void>("SDKKitPlateformCallBackImplWrapper_getOrderResultCallBack", retStatus, s_retMessage);
+}
+
+void SDKKitPlateformCallBackImplWrapper_exitGameCallBack(int retStatus, std::string s_retMessage)
+{
+    m_fflua_ptr->call<void>("SDKKitPlateformCallBackImplWrapper_exitGameCallBack", retStatus, s_retMessage);
+}
+
 
 //////////////////////////////////////////////
 void sdkkit_login()
