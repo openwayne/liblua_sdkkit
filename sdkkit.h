@@ -2,9 +2,15 @@
 #define SDK_KIT_H_
 
 #include <iostream>
+extern "C" {
+#include "lua.h"
+#include "lualib.h"
+#include "lauxlib.h"
+}
 
 
-extern char g_str[]; // 声明全局变量g_str
+void initLuaFrame(lua_State* ls);
+
 
 //////////////////////////////////////////////
 void sdkkit_login();

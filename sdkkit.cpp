@@ -4,13 +4,22 @@
 #include <jni.h>
 #include <iostream>
 #include <map>
+#include "fflua.h"
 
 using namespace std;
-
+using namespace ff;
 
 #ifdef __ANDROID__
 #include <android/log.h>
 #endif
+
+
+extern "C" {
+#include "lua.h"
+#include "lualib.h"
+#include "lauxlib.h"
+}
+
 
 #define  LOG_TAG    "SDKKIT"
 #define  LOGD(...)  __android_log_print(ANDROID_LOG_DEBUG,LOG_TAG,__VA_ARGS__)
@@ -27,6 +36,8 @@ void sdkkit_pay(int payAmount, std::string payRate, std::string payProductNum,
             std::string payGameLevel, std::string payRoleId, std::string payRoleLevel,
             std::string payRoleName, std::string payUserId, std::string payUserName,
             std::string payBlance, std::string extInfo);
+
+void sdkkit_pay_ext(int payAmount, std::map<std::string, std::string> data);
 
 void sdkkit_userCenter();
 
@@ -61,17 +72,17 @@ static fflua_t* m_fflua_ptr;
 
 void initLuaFrame(lua_State* ls)
 {
-    m_fflua_ptr = new fflua(ls);
+    m_fflua_ptr = new fflua_t(ls);
 
     // 绑定c++函数到lua
     fflua_register_t<>(ls).def(&sdkkit_login, "sdkkit_login");
-    fflua_register_t<>(ls).def(&sdkkit_kitCenter, "sdkkit_login");
-    fflua_register_t<>(ls).def(&sdkkit_switchAccount, "sdkkit_login");
-    fflua_register_t<>(ls).def(&sdkkit_pay, "sdkkit_login");
-    fflua_register_t<>(ls).def(&sdkkit_userCenter, "sdkkit_login");
-    fflua_register_t<>(ls).def(&sdkkit_getOrderInfo, "sdkkit_login");
-    fflua_register_t<>(ls).def(&sdkkit_floatWindow, "sdkkit_login");
-    fflua_register_t<>(ls).def(&sdkkit_exitGame, "sdkkit_login");
+    fflua_register_t<>(ls).def(&sdkkit_kitCenter, "sdkkit_kitCenter");
+    fflua_register_t<>(ls).def(&sdkkit_switchAccount, "sdkkit_switchAccount");
+    fflua_register_t<>(ls).def(&sdkkit_pay_ext, "sdkkit_pay");
+    fflua_register_t<>(ls).def(&sdkkit_userCenter, "sdkkit_userCenter");
+    fflua_register_t<>(ls).def(&sdkkit_getOrderInfo, "sdkkit_getOrderInfo");
+    fflua_register_t<>(ls).def(&sdkkit_floatWindow, "sdkkit_floatWindow");
+    fflua_register_t<>(ls).def(&sdkkit_exitGame, "sdkkit_exitGame");
 }
 
 
@@ -168,6 +179,13 @@ std::string sdkkit_easy_get(std::map<std::string, std::string> dataMap, std::str
     } else {
         return ii->second;
     }
+}
+
+void sdkkit_pay_ext(int payAmount, std::map<std::string, std::string> data)
+{
+    sdkkit_pay(payAmount, data["productId"], data["productName"], data["payProductNum"], data["payOrderId"], data["payServerId"],\
+        data["payServerName"], data["payGameLevel"], data["payRoleId"], data["payRoleLevel"], data["payRoleName"], data["payUserId"],\
+        data["payUserName"], data["payBlance"],data["extInfo"]);
 }
 
 
