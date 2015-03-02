@@ -1,0 +1,6 @@
+include $(CLEAR_VARS)
+LOCAL_MODULE := lua_sdkkit
+LOCAL_MODULE_FILENAME := liblua_sdkkit
+LOCAL_SRC_FILES := liblua_sdkkit.a
+LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)
+include $(BUILD_STATIC_LIBRARY)
