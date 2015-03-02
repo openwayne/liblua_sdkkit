@@ -76,6 +76,7 @@ void initLuaFrame(lua_State* ls)
 
     // 绑定c++函数到lua
     fflua_register_t<>(ls).def(&sdkkit_login, "sdkkit_login");
+    fflua_register_t<>(ls).def(&sdkkit_logout, "sdkkit_logout");
     fflua_register_t<>(ls).def(&sdkkit_kitCenter, "sdkkit_kitCenter");
     fflua_register_t<>(ls).def(&sdkkit_switchAccount, "sdkkit_switchAccount");
     fflua_register_t<>(ls).def(&sdkkit_pay_ext, "sdkkit_pay");
@@ -83,37 +84,52 @@ void initLuaFrame(lua_State* ls)
     fflua_register_t<>(ls).def(&sdkkit_getOrderInfo, "sdkkit_getOrderInfo");
     fflua_register_t<>(ls).def(&sdkkit_floatWindow, "sdkkit_floatWindow");
     fflua_register_t<>(ls).def(&sdkkit_exitGame, "sdkkit_exitGame");
+
+
+    fflua_register_t<>(ls).def(&sdkkit_onLogin, "sdkkit_onLogin");
+    fflua_register_t<>(ls).def(&sdkkit_onPay, "sdkkit_onPay");
+    fflua_register_t<>(ls).def(&sdkkit_onUpgrade, "sdkkit_onUpgrade");
+    fflua_register_t<>(ls).def(&sdkkit_onCreateRole, "sdkkit_onCreateRole");
+    fflua_register_t<>(ls).def(&sdkkit_onButtonClick, "sdkkit_onButtonClick");
+    fflua_register_t<>(ls).def(&sdkkit_onServerRoleInfo, "sdkkit_onServerRoleInfo");
+    fflua_register_t<>(ls).def(&sdkkit_onLogin, "sdkkit_onLogin");
 }
 
 
 void SDKKitPlateformCallBackImplWrapper_initCallBack(int retStatus, std::string retMessage)
 {
+    LOGD("call SDKKitPlateformCallBackImplWrapper_initCallBack");
 }
 
 
 void SDKKitPlateformCallBackImplWrapper_loginCallBack(int retStatus, std::string s_retMessage, std::string s_loginUserId, std::string s_loginAuthToken, std::string cpId)
 {
+    LOGD("call lua SDKKitPlateformCallBackImplWrapper_loginCallBack");
     m_fflua_ptr->call<void>("SDKKitPlateformCallBackImplWrapper_loginCallBack", retStatus, s_retMessage, s_loginUserId, s_loginAuthToken, cpId);
 }
 
 void SDKKitPlateformCallBackImplWrapper_logoutCallBack(int retStatus, std::string s_retMessage)
 {
+    LOGD("call lua SDKKitPlateformCallBackImplWrapper_logoutCallBack");
     m_fflua_ptr->call<void>("SDKKitPlateformCallBackImplWrapper_logoutCallBack", retStatus, s_retMessage);
 }
 
 void SDKKitPlateformCallBackImplWrapper_payCallBack(int retStatus, std::string s_retMessage,
         std::string s_loginUserId, std::string s_loginAuthToken, std::string s_loginServerId, std::string s_payKitOrderId)
 {
+    LOGD("call lua SDKKitPlateformCallBackImplWrapper_payCallBack");
     m_fflua_ptr->call<void>("SDKKitPlateformCallBackImplWrapper_payCallBack", retStatus, s_retMessage, s_loginUserId, s_loginAuthToken, s_loginServerId, s_payKitOrderId);
 }
 
 void SDKKitPlateformCallBackImplWrapper_getOrderResultCallBack(int retStatus, std::string s_retMessage)
 {
+    LOGD("call lua SDKKitPlateformCallBackImplWrapper_getOrderResultCallBack");
     m_fflua_ptr->call<void>("SDKKitPlateformCallBackImplWrapper_getOrderResultCallBack", retStatus, s_retMessage);
 }
 
 void SDKKitPlateformCallBackImplWrapper_exitGameCallBack(int retStatus, std::string s_retMessage)
 {
+    LOGD("call lua SDKKitPlateformCallBackImplWrapper_exitGameCallBack");
     m_fflua_ptr->call<void>("SDKKitPlateformCallBackImplWrapper_exitGameCallBack", retStatus, s_retMessage);
 }
 
@@ -196,12 +212,12 @@ void sdkkit_pay(int payAmount, std::string productId, std::string productName, s
 			std::string payBlance, std::string extInfo)
 {
     LOGD("sdkkit  pay");
-	//函数信息结构体
+	//函数信息结构体com.gameworks.sdkkit.sdknative.GWPlateformBusinessImplWrapper
     sdkkit::JniMethodInfo minfo;
     bool isHave = sdkkit::JniHelper::getStaticMethodInfo(minfo,/*sdkkit::JniMethodInfo的引用*/
                                                  "com/gameworks/sdkkit/sdknative/GWPlateformBusinessImplWrapper",/*类的路径*/
                                                  "pay",/*函数名*/
-                                                 "(ILjava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V");/*函数类型简写*/
+                                                 "(ILjava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V");/*函数类型简写*/
     
     if (isHave)
     {
