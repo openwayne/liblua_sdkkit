@@ -263,7 +263,7 @@ std::string sdkkit_getCp()
     {
         //CallStaticVoidMethod调用java函数，并把返回值赋值给activityObj
         jstring str = minfo.env->CallStaticVoidMethod(minfo.classID, minfo.methodID);
-        return JniHelper::jstring2string(str);
+        return sdkkit::JniHelper::jstring2string(str);
     }
 
     return "";
