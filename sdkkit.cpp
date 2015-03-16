@@ -245,6 +245,26 @@ void sdkkit_pay(int payAmount, std::string productId, std::string productName, s
 
 }
 
+std::string sdkkit_getCp()
+{
+    LOGD("sdkkit  sdkkit_getCp");
+    //函数信息结构体
+    sdkkit::JniMethodInfo minfo;
+    bool isHave = sdkkit::JniHelper::getStaticMethodInfo(minfo,/*sdkkit::JniMethodInfo的引用*/
+                                                 "com/gameworks/sdkkit/sdknative/GWPlateformBusinessImplWrapper",/*类的路径*/
+                                                 "getCurrentCp",/*函数名*/
+                                                 "()Ljava/lang/String;");/*函数类型简写*/
+    
+    if (isHave)
+    {
+        //CallStaticVoidMethod调用java函数，并把返回值赋值给activityObj
+        jstring str = minfo.env->CallStaticVoidMethod(minfo.classID, minfo.methodID);
+        return JniHelper::jstring2string(str);
+    }
+
+    return "";
+}
+
 void sdkkit_userCenter()
 {
     LOGD("sdkkit  userCenter");
