@@ -45,6 +45,8 @@ void sdkkit_logout();
 void sdkkit_getOrderInfo(std::string payOrderId);
 void sdkkit_floatWindow(bool value);
 void sdkkit_exitGame();
+std::string sdkkit_getCp();
+
 //////////////////////////////////////////////
 
 void sdkkit_onLogin(std::string userMark, std::string userType,
