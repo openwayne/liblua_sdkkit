@@ -93,6 +93,8 @@ void initLuaFrame(lua_State* ls)
     fflua_register_t<>(ls).def(&sdkkit_onButtonClick, "sdkkit_onButtonClick");
     fflua_register_t<>(ls).def(&sdkkit_onServerRoleInfo, "sdkkit_onServerRoleInfo");
     fflua_register_t<>(ls).def(&sdkkit_onLogin, "sdkkit_onLogin");
+
+    fflua_register_t<>(ls).def(&sdkkit_getCp, "sdkkit_getCp");
 }
 
 
