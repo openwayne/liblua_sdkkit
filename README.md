@@ -31,9 +31,7 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 ```
-
     *    `application`节点内配置
-    
 ```xml
     <application
         android:allowBackup="true"
