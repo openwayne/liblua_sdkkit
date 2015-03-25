@@ -33,6 +33,7 @@
 ```
 
     *    `application`节点内配置
+    
 ```xml
     <application
         android:allowBackup="true"
