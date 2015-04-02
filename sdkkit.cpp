@@ -16,7 +16,7 @@ using namespace std;
 #define  LOGD(...)  __android_log_print(ANDROID_LOG_DEBUG,LOG_TAG,__VA_ARGS__)
 #define  LOGE(...)  __android_log_print(ANDROID_LOG_ERROR,LOG_TAG,__VA_ARGS__)
 
-#ifdef USE_LUA_SDK
+#ifdef HJR_USE_LUA_SDK
 
 #include "fflua.h"
 using namespace ff;
@@ -58,7 +58,7 @@ void SDKKitPlateformCallBackImplWrapper_initCallBack(int retStatus, std::string 
 void SDKKitPlateformCallBackImplWrapper_loginCallBack(int retStatus, std::string s_retMessage, std::string s_loginUserId, std::string s_loginUserName, std::string s_loginAuthToken, std::string s_loginOpenId)
 {
     LOGD("call c/lua SDKKitPlateformCallBackImplWrapper_loginCallBack");
-    #ifdef USE_LUA_SDK
+    #ifdef HJR_USE_LUA_SDK
     m_fflua_ptr->call<void>("SDKKitPlateformCallBackImplWrapper_loginCallBack", retStatus, s_retMessage, s_loginUserId, s_loginUserName, s_loginAuthToken, s_loginOpenId);
     #endif
 }
@@ -66,7 +66,7 @@ void SDKKitPlateformCallBackImplWrapper_loginCallBack(int retStatus, std::string
 void SDKKitPlateformCallBackImplWrapper_logoutCallBack(int retStatus, std::string s_retMessage)
 {
     LOGD("call c/lua SDKKitPlateformCallBackImplWrapper_logoutCallBack");
-    #ifdef USE_LUA_SDK
+    #ifdef HJR_USE_LUA_SDK
     m_fflua_ptr->call<void>("SDKKitPlateformCallBackImplWrapper_logoutCallBack", retStatus, s_retMessage);
     #endif
 }
@@ -75,7 +75,7 @@ void SDKKitPlateformCallBackImplWrapper_payCallBack(int retStatus, std::string s
         std::string s_loginUserId, std::string s_loginAuthToken, std::string s_loginServerId, std::string s_payKitOrderId)
 {
     LOGD("call c/lua SDKKitPlateformCallBackImplWrapper_payCallBack");
-    #ifdef USE_LUA_SDK
+    #ifdef HJR_USE_LUA_SDK
     m_fflua_ptr->call<void>("SDKKitPlateformCallBackImplWrapper_payCallBack", retStatus, s_retMessage, s_loginUserId, s_loginAuthToken, s_loginServerId, s_payKitOrderId);
     #endif
 }
@@ -83,7 +83,7 @@ void SDKKitPlateformCallBackImplWrapper_payCallBack(int retStatus, std::string s
 void SDKKitPlateformCallBackImplWrapper_getOrderResultCallBack(int retStatus, std::string s_retMessage)
 {
     LOGD("call c/lua SDKKitPlateformCallBackImplWrapper_getOrderResultCallBack");
-    #ifdef USE_LUA_SDK
+    #ifdef HJR_USE_LUA_SDK
     m_fflua_ptr->call<void>("SDKKitPlateformCallBackImplWrapper_getOrderResultCallBack", retStatus, s_retMessage);
     #endif
 }
@@ -91,7 +91,7 @@ void SDKKitPlateformCallBackImplWrapper_getOrderResultCallBack(int retStatus, st
 void SDKKitPlateformCallBackImplWrapper_exitGameCallBack(int retStatus, std::string s_retMessage)
 {
     LOGD("call c/lua SDKKitPlateformCallBackImplWrapper_exitGameCallBack");
-    #ifdef USE_LUA_SDK
+    #ifdef HJR_USE_LUA_SDK
     m_fflua_ptr->call<void>("SDKKitPlateformCallBackImplWrapper_exitGameCallBack", retStatus, s_retMessage);
     #endif
 }

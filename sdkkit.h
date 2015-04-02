@@ -2,11 +2,11 @@
 #define SDK_KIT_H_
 
 
-#define USE_LUA_SDK 1
+#define HJR_USE_LUA_SDK 1
 
 #include <iostream>
 
-#ifdef USE_LUA_SDK
+#ifdef HJR_USE_LUA_SDK
 
 extern "C" {
 #include "lua.h"
@@ -61,5 +61,19 @@ void sdkkit_onServerRoleInfo(std::string roleId, int roleLevel,
 
 //////////////////////////////////////////////
 
+void SDKKitPlateformCallBackImplWrapper_initCallBack(int retStatus, std::string retMessage);
+
+void SDKKitPlateformCallBackImplWrapper_loginCallBack(int retStatus, std::string s_retMessage, std::string s_loginUserId, std::string s_loginUserName, std::string s_loginAuthToken, std::string s_loginOpenId);
+
+void SDKKitPlateformCallBackImplWrapper_logoutCallBack(int retStatus, std::string s_retMessage);
+
+void SDKKitPlateformCallBackImplWrapper_payCallBack(int retStatus, std::string s_retMessage,
+        std::string s_loginUserId, std::string s_loginAuthToken, std::string s_loginServerId, std::string s_payKitOrderId);
+
+void SDKKitPlateformCallBackImplWrapper_getOrderResultCallBack(int retStatus, std::string s_retMessage);
+
+void SDKKitPlateformCallBackImplWrapper_exitGameCallBack(int retStatus, std::string s_retMessage);
+
+//////////////////////////////////////////////
 
 #endif

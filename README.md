@@ -2,7 +2,7 @@
 ![cocos2d-x](https://camo.githubusercontent.com/62f509218415e5f677180a479fd65cfe54a17f04/687474703a2f2f7777772e636f636f7332642d782e6f72672f6174746163686d656e74732f3830312f636f636f733264785f706f7274726169742e706e67)
 
 
-#快发大师Lua接入文档
+#快发大师c/c++/Lua接入文档
 ------------------
 
 ##1.介绍
@@ -16,6 +16,7 @@
 ##2.接入流程
 ![流程](http://www.haojieru.com/ueditor/php/upload/image/20150211/1423620197362069.png)
 ##3.接入步骤
+*  如果您目前使用c/c++版本，请注释`sdkkit.h`中的`#define HJR_USE_LUA_SDK 1` 
 *  把`lua_sdk`文件夹下的android文件夹中的`工程`导入`eclipse`
 *  对项目的`AndroidManifest.xml`进行配置
     *    权限声明
@@ -162,7 +163,26 @@
 
 
 ##4.SDK接口调用说明
+*   如果使用c/c++版本，则请在sdkkit.cpp中实现如下函数
+    ```c
+        //////////////////////////////////////////////
 
+        void SDKKitPlateformCallBackImplWrapper_initCallBack(int retStatus, std::string retMessage);
+
+        void SDKKitPlateformCallBackImplWrapper_loginCallBack(int retStatus, std::string s_retMessage, std::string s_loginUserId, std::string s_loginUserName, std::string s_loginAuthToken, std::string s_loginOpenId);
+
+        void SDKKitPlateformCallBackImplWrapper_logoutCallBack(int retStatus, std::string s_retMessage);
+
+        void SDKKitPlateformCallBackImplWrapper_payCallBack(int retStatus, std::string s_retMessage,
+                std::string s_loginUserId, std::string s_loginAuthToken, std::string s_loginServerId, std::string s_payKitOrderId);
+
+        void SDKKitPlateformCallBackImplWrapper_getOrderResultCallBack(int retStatus, std::string s_retMessage);
+
+        void SDKKitPlateformCallBackImplWrapper_exitGameCallBack(int retStatus, std::string s_retMessage);
+
+        //////////////////////////////////////////////
+    ```
+    
 *   在lua代码中添加
     ```lua
         import sdkkit.lua
