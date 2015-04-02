@@ -4,68 +4,22 @@
 #include <jni.h>
 #include <iostream>
 #include <map>
-#include "fflua.h"
 
 using namespace std;
-using namespace ff;
 
 #ifdef __ANDROID__
 #include <android/log.h>
 #endif
 
 
-extern "C" {
-#include "lua.h"
-#include "lualib.h"
-#include "lauxlib.h"
-}
-
-
 #define  LOG_TAG    "SDKKIT"
 #define  LOGD(...)  __android_log_print(ANDROID_LOG_DEBUG,LOG_TAG,__VA_ARGS__)
 #define  LOGE(...)  __android_log_print(ANDROID_LOG_ERROR,LOG_TAG,__VA_ARGS__)
 
+#ifdef USE_LUA_SDK
 
-//////////////////////////////////////////////
-void sdkkit_login();
-void sdkkit_switchAccount();
-
-void sdkkit_pay(int payAmount, std::string payRate, std::string payProductNum,
-            std::string payOrderId, std::string payServerId, std::string payServerName,
-            std::string payGameLevel, std::string payRoleId, std::string payRoleLevel,
-            std::string payRoleName, std::string payUserId, std::string payUserName,
-            std::string payBlance, std::string extInfo);
-
-void sdkkit_pay_ext(int payAmount, std::map<std::string, std::string> data);
-
-void sdkkit_userCenter();
-
-void sdkkit_logout();
-void sdkkit_getOrderInfo(std::string payOrderId);
-void sdkkit_exitGame();
-
-//////////////////////////////////////////////
-
-void sdkkit_onLogin(std::string userMark, std::string userType,
-            std::string serverNo, std::string roleServerName);
-
-void sdkkit_onPay(int amount, std::string serverNo, std::string userMark,
-            std::string roleMark, std::string orderNumber, std::string upgrade,
-            std::string productDesc, std::string roleName, std::string roleServerName);
-
-void sdkkit_onUpgrade(std::string userMark, std::string serverNo,
-            std::string upgrade, std::string roleId, std::string roleName,
-            std::string roleServerName);
-
-void sdkkit_onCreateRole(std::string userMark, std::string roleMark,
-            std::string serverNo, std::string roleName);
-
-void sdkkit_onButtonClick(std::string name, std::string userMark);
-
-void sdkkit_onServerRoleInfo(std::string roleId, int roleLevel,
-            std::string roleName, std::string rolePartyName, std::string roleVipLevel);
-
-//////////////////////////////////////////////
+#include "fflua.h"
+using namespace ff;
 
 static fflua_t* m_fflua_ptr;
 
@@ -93,6 +47,7 @@ void initLuaFrame(lua_State* ls)
 
 }
 
+#endif
 
 void SDKKitPlateformCallBackImplWrapper_initCallBack(int retStatus, std::string retMessage)
 {
@@ -102,33 +57,43 @@ void SDKKitPlateformCallBackImplWrapper_initCallBack(int retStatus, std::string 
 
 void SDKKitPlateformCallBackImplWrapper_loginCallBack(int retStatus, std::string s_retMessage, std::string s_loginUserId, std::string s_loginUserName, std::string s_loginAuthToken, std::string s_loginOpenId)
 {
-    LOGD("call lua SDKKitPlateformCallBackImplWrapper_loginCallBack");
+    LOGD("call c/lua SDKKitPlateformCallBackImplWrapper_loginCallBack");
+    #ifdef USE_LUA_SDK
     m_fflua_ptr->call<void>("SDKKitPlateformCallBackImplWrapper_loginCallBack", retStatus, s_retMessage, s_loginUserId, s_loginUserName, s_loginAuthToken, s_loginOpenId);
+    #endif
 }
 
 void SDKKitPlateformCallBackImplWrapper_logoutCallBack(int retStatus, std::string s_retMessage)
 {
-    LOGD("call lua SDKKitPlateformCallBackImplWrapper_logoutCallBack");
+    LOGD("call c/lua SDKKitPlateformCallBackImplWrapper_logoutCallBack");
+    #ifdef USE_LUA_SDK
     m_fflua_ptr->call<void>("SDKKitPlateformCallBackImplWrapper_logoutCallBack", retStatus, s_retMessage);
+    #endif
 }
 
 void SDKKitPlateformCallBackImplWrapper_payCallBack(int retStatus, std::string s_retMessage,
         std::string s_loginUserId, std::string s_loginAuthToken, std::string s_loginServerId, std::string s_payKitOrderId)
 {
-    LOGD("call lua SDKKitPlateformCallBackImplWrapper_payCallBack");
+    LOGD("call c/lua SDKKitPlateformCallBackImplWrapper_payCallBack");
+    #ifdef USE_LUA_SDK
     m_fflua_ptr->call<void>("SDKKitPlateformCallBackImplWrapper_payCallBack", retStatus, s_retMessage, s_loginUserId, s_loginAuthToken, s_loginServerId, s_payKitOrderId);
+    #endif
 }
 
 void SDKKitPlateformCallBackImplWrapper_getOrderResultCallBack(int retStatus, std::string s_retMessage)
 {
-    LOGD("call lua SDKKitPlateformCallBackImplWrapper_getOrderResultCallBack");
+    LOGD("call c/lua SDKKitPlateformCallBackImplWrapper_getOrderResultCallBack");
+    #ifdef USE_LUA_SDK
     m_fflua_ptr->call<void>("SDKKitPlateformCallBackImplWrapper_getOrderResultCallBack", retStatus, s_retMessage);
+    #endif
 }
 
 void SDKKitPlateformCallBackImplWrapper_exitGameCallBack(int retStatus, std::string s_retMessage)
 {
-    LOGD("call lua SDKKitPlateformCallBackImplWrapper_exitGameCallBack");
+    LOGD("call c/lua SDKKitPlateformCallBackImplWrapper_exitGameCallBack");
+    #ifdef USE_LUA_SDK
     m_fflua_ptr->call<void>("SDKKitPlateformCallBackImplWrapper_exitGameCallBack", retStatus, s_retMessage);
+    #endif
 }
 
 
