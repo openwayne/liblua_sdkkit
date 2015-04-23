@@ -1,6 +1,0 @@
-int drawable ic_launcher 0x7f020000
-int id hjr_channel_dialog_negative 0x7f050001
-int id hjr_channel_dialog_positive 0x7f050000
-int layout hjr_framework_channel_window 0x7f030000
-int layout hjr_framework_middleware_demo 0x7f030001
-int string app_name 0x7f040000
