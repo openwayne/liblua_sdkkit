@@ -5,6 +5,7 @@
 #define HJR_USE_LUA_SDK 1
 
 #include <iostream>
+#include <map>
 
 #ifdef HJR_USE_LUA_SDK
 
@@ -22,13 +23,12 @@ void initLuaFrame(lua_State* ls);
 
 //////////////////////////////////////////////
 void sdkkit_login();
-void sdkkit_switchAccount();
 
-void sdkkit_pay(int payAmount, std::string payRate, std::string payProductNum,
-            std::string payOrderId, std::string payServerId, std::string payServerName,
-            std::string payGameLevel, std::string payRoleId, std::string payRoleLevel,
-            std::string payRoleName, std::string payUserId, std::string payUserName,
-            std::string payBlance, std::string extInfo);
+void sdkkit_pay(int payAmount, std::string productId, std::string productName, std::string payProductNum,
+                  std::string payOrderId, std::string payServerId, std::string payServerName,
+                  std::string payGameLevel, std::string payRoleId, std::string payRoleLevel,
+                  std::string payRoleName, std::string payUserId, std::string payUserName,
+                  std::string payBlance, std::string extInfo);
 
 void sdkkit_pay_ext(int payAmount, std::map<std::string, std::string> data); // lua 中sdkkit_pay绑定的是此函数
 
@@ -40,24 +40,24 @@ void sdkkit_exitGame();
 
 //////////////////////////////////////////////
 
-void sdkkit_onLogin(std::string userMark, std::string userType,
-            std::string serverNo, std::string roleServerName);
+void sdkkit_onLogin(std::string userId, std::string serverId);
 
-void sdkkit_onPay(int amount, std::string serverNo, std::string userMark,
-            std::string roleMark, std::string orderNumber, std::string upgrade,
-            std::string productDesc, std::string roleName, std::string roleServerName);
+void sdkkit_onPay(int amount, std::string serverId, std::string serverName,
+            std::string userId, std::string roleId, std::string orderNumber,
+            std::string roleGrade, std::string roleName, std::string productDesc);
 
-void sdkkit_onUpgrade(std::string userMark, std::string serverNo,
-            std::string upgrade, std::string roleId, std::string roleName,
+void sdkkit_onUpgrade(std::string userId, std::string serverId,
+            std::string roleGrade, std::string roleId, std::string roleName,
             std::string roleServerName);
 
-void sdkkit_onCreateRole(std::string userMark, std::string roleMark,
-            std::string serverNo, std::string roleName);
+void sdkkit_onCreateRole(std::string userId, std::string roleId,
+            std::string roleName, std::string serverId, std::string serverName);
 
-void sdkkit_onButtonClick(std::string name, std::string userMark);
+void sdkkit_onButtonClick(std::string userId, std::string buttonName);
 
-void sdkkit_onServerRoleInfo(std::string roleId, int roleLevel,
-            std::string roleName, std::string rolePartyName, std::string roleVipLevel);
+void sdkkit_onServerRoleInfo(std::string roleId, std::string roleName, 
+      int roleLevel, std::string serverId, std::string serverName, 
+      std::string rolePartyName, std::string roleVipLevel);
 
 //////////////////////////////////////////////
 

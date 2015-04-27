@@ -30,8 +30,6 @@ void initLuaFrame(lua_State* ls)
     // 绑定c++函数到lua
     fflua_register_t<>(ls).def(&sdkkit_login, "sdkkit_login");
     fflua_register_t<>(ls).def(&sdkkit_logout, "sdkkit_logout");
-    fflua_register_t<>(ls).def(&sdkkit_kitCenter, "sdkkit_kitCenter");
-    fflua_register_t<>(ls).def(&sdkkit_switchAccount, "sdkkit_switchAccount");
     fflua_register_t<>(ls).def(&sdkkit_pay_ext, "sdkkit_pay");
     fflua_register_t<>(ls).def(&sdkkit_userCenter, "sdkkit_userCenter");
     fflua_register_t<>(ls).def(&sdkkit_getOrderInfo, "sdkkit_getOrderInfo");
@@ -71,12 +69,11 @@ void SDKKitPlateformCallBackImplWrapper_logoutCallBack(int retStatus, std::strin
     #endif
 }
 
-void SDKKitPlateformCallBackImplWrapper_payCallBack(int retStatus, std::string s_retMessage,
-        std::string s_loginUserId, std::string s_loginAuthToken, std::string s_loginServerId, std::string s_payKitOrderId)
+void SDKKitPlateformCallBackImplWrapper_payCallBack(int retStatus, std::string s_retMessage, std::string s_payKitOrderId)
 {
     LOGD("call c/lua SDKKitPlateformCallBackImplWrapper_payCallBack");
     #ifdef HJR_USE_LUA_SDK
-    m_fflua_ptr->call<void>("SDKKitPlateformCallBackImplWrapper_payCallBack", retStatus, s_retMessage, s_loginUserId, s_loginAuthToken, s_loginServerId, s_payKitOrderId);
+    m_fflua_ptr->call<void>("SDKKitPlateformCallBackImplWrapper_payCallBack", retStatus, s_retMessage, s_payKitOrderId);
     #endif
 }
 
@@ -271,7 +268,7 @@ void sdkkit_onLogin(std::string userId, std::string serverId)
 
 void sdkkit_onPay(int amount, std::string serverId, std::string serverName,
             std::string userId, std::string roleId, std::string orderNumber,
-            std::string roleGrade, std::string roleName, std::string productDesc);
+            std::string roleGrade, std::string roleName, std::string productDesc)
 {
     LOGD("sdkkit  onPay");
     //函数信息结构体
@@ -302,7 +299,7 @@ void sdkkit_onPay(int amount, std::string serverId, std::string serverName,
 
 void sdkkit_onUpgrade(std::string userId, std::string serverId,
             std::string roleGrade, std::string roleId, std::string roleName,
-            std::string roleServerName);
+            std::string roleServerName)
 {
     LOGD("sdkkit  onUpgrade");
     //函数信息结构体
@@ -329,15 +326,15 @@ void sdkkit_onUpgrade(std::string userId, std::string serverId,
 
 void sdkkit_onServerRoleInfo(std::string roleId, std::string roleName, 
       int roleLevel, std::string serverId, std::string serverName, 
-      std::string rolePartyName, std::string roleVipLevel);
+      std::string rolePartyName, std::string roleVipLevel)
 {
-    LOGD("sdkkit  onCreateRole");
+    LOGD("sdkkit  onServerRoleInfo");
    //函数信息结构体
     sdkkit::JniMethodInfo minfo;
     bool isHave = sdkkit::JniHelper::getStaticMethodInfo(minfo,/*sdkkit::JniMethodInfo的引用*/
                                                  "com/hjr/sdkkit/sdknative/SDKKitPlatformCollectionsImplWrapper",/*类的路径*/
-                                                 "onCreateRole",/*函数名*/
-                                                 "(Ljava/lang/String;Ljava/lang/String;ILjava/lang/String;Ljava/lang/String;Ljava/lang/String;)V");/*函数类型简写*/
+                                                 "onServerRoleInfo",/*函数名*/
+                                                 "(Ljava/lang/String;Ljava/lang/String;ILjava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V");/*函数类型简写*/
     
     if (isHave)
     {
@@ -378,13 +375,13 @@ void sdkkit_onButtonClick(std::string userId, std::string buttonName)
 void sdkkit_onCreateRole(std::string userId, std::string roleId,
             std::string roleName, std::string serverId, std::string serverName)
 {
-    LOGD("sdkkit  onServerRoleInfo");
+    LOGD("sdkkit  onCreateRole");
    //函数信息结构体
     sdkkit::JniMethodInfo minfo;
     bool isHave = sdkkit::JniHelper::getStaticMethodInfo(minfo,/*sdkkit::JniMethodInfo的引用*/
                                                  "com/hjr/sdkkit/sdknative/SDKKitPlatformCollectionsImplWrapper",/*类的路径*/
-                                                 "onServerRoleInfo",/*函数名*/
-                                                 "(Ljava/lang/String;ILjava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V");/*函数类型简写*/
+                                                 "onCreateRole",/*函数名*/
+                                                 "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V");/*函数类型简写*/
     
     if (isHave)
     {
